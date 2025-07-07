@@ -440,3 +440,4 @@ C:\Users\waiya\OneDrive\Desktop\ProductMVC_1\obj\Debug\net9.0\ProductMVC.pdb
 C:\Users\waiya\OneDrive\Desktop\ProductMVC_1\obj\Debug\net9.0\ProductMVC.genruntimeconfig.cache
 C:\Users\waiya\OneDrive\Desktop\ProductMVC_1\obj\Debug\net9.0\ref\ProductMVC.dll
 C:\Users\waiya\OneDrive\Desktop\ProductMVC\obj\Debug\net9.0\compressed\4mmkb6r8ha-iuyfp5fjkf.gz
+C:\Users\waiya\OneDrive\Desktop\ProductMVC\obj\Debug\net9.0\ProductMVC.sourcelink.json
