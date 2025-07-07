@@ -1,0 +1,80 @@
+@model PagedList<ProductViewModel>
+@using System.Reflection
+@using System.ComponentModel
+@{
+    ViewData["Title"] = "Products List";
+}
+<h1>Index</h1>
+<h4>@ViewData["Title"]</h4>
+<a asp-controller="Product" asp-action="Create" class="btn btn-primary float-end my-2">Add Product</a>
+<table class="table">
+    <tr>
+        @foreach(var property in typeof(ProductMVC.Models.ProductViewModel).GetProperties()) {
+            <th>
+                @(property.GetCustomAttributes(typeof(DisplayNameAttribute), false)
+                    .Cast<DisplayNameAttribute>()
+                    .FirstOrDefault()?.DisplayName ?? property.Name
+                )
+            </th>
+        }
+        <th>[Action]</th>
+    </tr>
+    @foreach (var product in Model)
+    {
+        <tr>
+            
+            <td>@product.Id</td>
+            <td>@product.Name</td>
+            <td>@product.Description</td>
+            <td>@product.BuyingPrice</td>
+            <td>@product.Supplier</td>
+            <td><img src="/images/@product.PictureFileName" width="75"
+                    onerror="this.onerror=null;this.src='/images/NoData.jpg';" /></td>
+            <td>@product.ManufacturingDate</td>
+            <td>@product.PurchasingDate</td>           
+            <td>@product.ExpirationDate.ToShortDateString()</td>
+            <td>
+                <a asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id"
+                    class="btn btn-info text-white">Edit</a>
+                <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
+                    class="btn btn-danger text-white">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+<nav aria-label="Page navigation" class="d-flex justify-content-between align-items-center">
+    <div>
+        @if (Model.HasPreviousPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize"
+                class="btn btn-outline-primary btn-sm">&laquo; Previous</a>
+        }
+    </div>
+    <ul class="pagination pagination-sm mb-0">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                <a asp-action="Index" asp-route-page="@i" asp-route-pageSize="@Model.PageSize" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+    <div>
+        @if (Model.HasNextPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize"
+                class="btn btn-outline-primary btn-sm">Next &raquo;</a>
+        }
+    </div>
+</nav>
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <form asp-action="Index" method="get" class="form-inline">
+        <label for="pageSize" class="mr-2 small">Records Previous page:</label>
+        <select id="pageSize" name="pageSize" asp-for="@Model.PageSize" class="form-control from-control-sm" onchange="this.form.submit()">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </form>
+    <p class="mb-0 small">[Total Records: @Model.TotalRecords | Current Page: @Model.PageNumber | Total Pages: @Model.TotalPages]</p>
+</div>

@@ -1,0 +1,62 @@
+@model ProductMVC.Models.ProductViewModel
+@{
+    ViewData["Title"] = "Delete Product";
+    var pictureFilePath = TempData["PictureFilePath"]?.ToString();
+    if (pictureFilePath == "/images/"){
+        pictureFilePath = "/images/NoData.jpg";
+    }
+    var manufacturingDate = TempData["ManufacturingDate"]?.ToString();
+    var purchasingDate = TempData["PurchasingDate"]?.ToString();
+    var supplier = TempData["Supplier"]?.ToString();
+    if (supplier == "" | supplier == null)
+    {
+        supplier = "Unknown";
+    }
+}
+<h1>Delete</h1>
+<h4>@ViewData["Title"]</h4>
+<h5>You are going to Delete this record ... If you are sure, just press "Delete" button</h5>
+<form method="post" class="w-75 mx-auto">
+    <div class="mb-3">
+        <label for="Id" class="form-label">Id:</label>
+        <input type="text" class="form-control" id="Id" asp-for="Id" readonly />
+    </div>
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name:</label>
+        <input type="text" class="form-control" id="Name" asp-for="Name" readonly/>
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description:</label>
+        <input type="text" class="form-control" id="Description" asp-for="Description" readonly/>
+    </div>
+    <div class="mb-3">
+        <label for="BuyingPrice" class="form-label">Buying Price:</label>
+        <input type="text" class="form-control" id="BuyingPrice" asp-for="BuyingPrice" readonly/>
+    </div>
+    <div class="mb-3">
+        <label for="supplier" class="form-label">Supplier: @supplier </label> <br />
+    </div>
+    <div class="mb-3">
+        <label for="PictureFileName" class="form-label">Current Picture Filename:</label>
+        <input type="text" class="form-control" id="PictureFileName" asp-for="PictureFileName" readonly />
+        <img src="@pictureFilePath" width="120">
+    </div>
+    <div class="mb-3">
+        <label for="ManufacturingDate" class="form-label">Date of Manufacturing: @manufacturingDate</label>
+    </div>
+    <div class="mb-3">
+        <label for="PurchasingDate" class="form-label">Date of Purchasing: @purchasingDate</label>
+    </div>
+    <div class="mb-3">
+        <label for="ExpirationDate" class="form-label" readonly>Expiration Date: </label>
+        <input type="text" class="form-control" id="ExpirationDate" asp-for="ExpirationDate" readonly />
+    </div>
+    <div class="mb-3">
+        <label>&nbsp;&nbsp;&nbsp;</label>
+        <div class="col-sm-9">
+            <input type="submit" class="btn btn-info mx-auto d-inline" value="Delete" />
+            <input type="button" class="btn btn-primary mx-auto d-inline" value="Cancel" action="action"
+                onclick="window.location.href='../'" />
+        </div>
+    </div>
+</form>

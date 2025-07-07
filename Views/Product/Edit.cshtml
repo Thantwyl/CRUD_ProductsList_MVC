@@ -1,0 +1,84 @@
+@model ProductMVC.Models.ProductViewModel
+@{
+    ViewData["Title"] = "Edit Product";
+    var pictureFilePath = TempData["PictureFilePath"]?.ToString();
+    if (pictureFilePath == "/images/") {
+        pictureFilePath = "/images/NoData.jpg";
+    }
+    var manufacturingDate = TempData["ManufacturingDate"]?.ToString();
+    var purchasingDate = TempData["PurchasingDate"]?.ToString();
+    var supplier = TempData["Supplier"]?.ToString();
+    if (supplier == "" | supplier == null) 
+    {
+        supplier = "Unknown";
+    }
+}
+<h1>Edit</h1>
+<h4>@ViewData["Title"]</h4>
+<form enctype="multipart/form-data" method="post" asp-controller="Product" asp-action="Edit" class="w-75 mx-auto">
+    <div class="mb-3">
+        <label for="Id" class="form-label">Id:</label>
+        <input type="text" class="form-control" id="Id" asp-for="Id" readonly />
+    </div>
+    <div class="mb-3">
+        <label for="Name" class="form-label">Please enter Name:</label>
+        <input type="text" class="form-control" id="Name" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Please enter Description:</label>
+        <input type="text" class="form-control" id="Description" asp-for="Description" />
+    </div>
+    <div class="mb-3">
+        <label for="BuyingPrice" class="form-label">Please enter Buying Price:</label>
+        <input type="text" class="form-control" id="BuyingPrice" asp-for="BuyingPrice" />
+    </div>
+    <div class="mb-3">
+        <label for="Supplier" class="form-label">Region of Birth: @supplier</label><br />
+        <label>If data is incorrect, please select again form the menu:</label>
+        <div class="col-sm-9">
+            <select class="form-select" asp-for="Supplier" value="@supplier">
+                <option value="Unknown">Unknown</option>
+                <option value="7-Eleven">7-Eleven</option>
+                <option value="Family Mart">Family Mart</option>
+                <option value="Lotus's go fresh">Lotus's go fresh</option>
+                <option value="Mini Big C">Mini Big C</option>
+                <option value="Tops Daily">Tops Daily</option>
+            </select>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="PictureFileName" class="form-label">Current Picture FileName:</label>
+        <input type="text" class="form-control" id="PictureFileName" asp-for="PictureFileName" readonly />
+        <img src="@pictureFilePath" width="120" />
+    </div>
+    <div class="mp-3">
+        <label for="Picture" class="form-label">If you want to change Picture of product, please upload again:</label>
+        <input type="file" class="form-control" name="PictureFile" id="PictureFileName" />
+    </div>
+    <div class="mb-3">
+        <label for="ManufacturingDate" class="form-label">Date of Manufacturing:</label>
+        <div class="col-sm-9">
+            <input asp-for="ManufacturingDate" type="date" class="form-control" value="@manufacturingDate" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="PurchasingDate" class="form-label">Date of Purchasing:</label>
+        <div class="col-sm-9">
+            <input asp-for="PurchasingDate" type="date" class="form-control" value="@purchasingDate" />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="ExpirationDate" class="form-label">Expiration Date:</label>
+        <div>
+            <input type="text" class="form-control" id="ExpirationDate" name="ExpirationDate" value="@Model.ExpirationDate.ToString("MM-dd-yy")" asp-for="ExpirationDate" readonly />
+        </div>
+    </div>
+    <div class="mb-3">
+        <label>&nbsp;&nbsp;&nbsp;</label>
+        <div class="col-sm-9">
+            <input type="submit" class="btn btn-info mx-auto d-inline" value="Save" />
+            <input type="button" class="btn btn-primary mx-auto d-inline" value="Cancel" action="action"
+                onclick="window.location.href='../'" />
+        </div>
+    </div>
+</form>
